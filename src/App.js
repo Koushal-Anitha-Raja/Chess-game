@@ -1,8 +1,6 @@
 import "./App.css";
 import Chessboard from "chessboardjsx";
-
 import { Chess } from "chess.js";
-
 import React, { useState, useRef, useEffect } from "react";
 
 const container = {
@@ -14,33 +12,46 @@ const container = {
 
 function App() {
   const [fen, setFen] = useState("start");
+  const [isGameOver, setIsGameOver] = useState(false);
 
   let game = useRef(null);
 
   useEffect(() => {
     game.current = new Chess();
+    console.log("Game", game.current);
   }, []);
-  console.log(game);
 
   const onDrop = ({ sourceSquare, targetSquare }) => {
-    let move = game.current.move({
-      from: sourceSquare,
-      to: targetSquare,
-    });
+    try {
+      let move = game.current.move({
+        from: sourceSquare,
+        to: targetSquare,
+      });
 
-    // to check for illegal move
-    if (move === null) return;
+      // Check for illegal move
+      if (move === null) {
+        return;
+      }
 
-    setFen(game.current.fen());
+      setFen(game.current.fen());
+
+      // Check for checkmate
+      if (game.current.isGameOver()) {
+        setIsGameOver(true);
+      }
+    } catch (e) {
+      console.log("Invalid move");
+    }
   };
+
   return (
     <div className="App" style={container}>
-      {game.current && game.current.game_over ? (
+      {isGameOver && (
         <div>
           <h1>Game Over</h1>
-          <span></span>
+          <span>Checkmate!</span>
         </div>
-      ) : null}
+      )}
 
       <Chessboard position={fen} onDrop={onDrop} />
     </div>
