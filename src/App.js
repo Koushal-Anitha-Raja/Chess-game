@@ -21,6 +21,12 @@ function App() {
     console.log("Game", game.current);
   }, []);
 
+  const resetGame = () => {
+    game.current.reset();
+    setFen("start");
+    setIsGameOver(false);
+  };
+
   const onDrop = ({ sourceSquare, targetSquare }) => {
     try {
       let move = game.current.move({
@@ -45,16 +51,21 @@ function App() {
   };
 
   return (
-    <div className="App" style={container}>
+    <>
       {isGameOver && (
-        <div>
+        <div style={{ textAlign: "center" }}>
           <h1>Game Over</h1>
-          <span>Checkmate!</span>
+          <span className="span">Checkmate!</span>
+          <br></br>
+          <button onClick={resetGame} className="button1">
+            Play again
+          </button>
         </div>
       )}
-
-      <Chessboard position={fen} onDrop={onDrop} />
-    </div>
+      <div className="App" style={container}>
+        <Chessboard position={fen} onDrop={onDrop} />
+      </div>
+    </>
   );
 }
 

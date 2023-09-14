@@ -23,6 +23,24 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.span {
+  margin-bottom: 10px; /* Add margin to the bottom of the span */
+}
+/* Add this CSS to your App.css or equivalent stylesheet */
+.button1 {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease; /* Add a transform animation */
+}
+
+.button1:hover {
+  transform: scale(1.1); /* Scale the button slightly when hovered */
+}
 
 .App-link {
   color: #61dafb;
